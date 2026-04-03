@@ -1,23 +1,301 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+
+  <style>
+    /* 기본 스타일 재설정 */
+    body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.8; margin: 0; padding: 0; background: #f0f4f8; color: #333; }
+    header { background: #0a234e; color: #fff; text-align: center; padding: 40px 15px; border-bottom: 5px solid #00a3ad; }
+    header h1 { margin: 0; font-size: 2.2em; line-height: 1.3; font-weight: 800; }
+    header p { font-size: 1.1em; opacity: 0.9; margin-top: 10px; }
+    section { max-width: 900px; margin: 20px auto; padding: 30px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h2 { color: #0a234e; font-size: 1.8em; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 30px; }
+    h3 { color: #00a3ad; font-size: 1.4em; margin-top: 25px; }
+    p { margin-bottom: 1em; text-align: justify; }
+    ul, ol { padding-left: 20px; margin-top: 1em; margin-bottom: 1em; line-height: 1.8; }
+    li { margin-bottom: 0.5em; }
+
+    /* 테이블 스타일 */
+    table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 20px 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+    th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+    th { background: #f5f5f5; color: #333; font-weight: 700; border-right: 1px solid #eee; }
+    td:last-child, th:last-child { border-right: none; }
+    tr:last-child td { border-bottom: none; }
+
+    /* CTA 버튼 스타일 */
+    .btn-cta {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #00a3ad;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1em;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0, 163, 173, 0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+      margin-top: 20px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+    }
+    .btn-cta:hover {
+      background: #007f87;
+      transform: translateY(-2px);
+    }
+
+    /* 이미지 스타일 */
+    .feature-img { width: 100%; height: auto; border-radius: 10px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      header { padding: 30px 15px; }
+      header h1 { font-size: 1.8em; }
+      header p { font-size: 1em; }
+      section { margin: 10px; padding: 20px; }
+      h2 { font-size: 1.6em; }
+      h3 { font-size: 1.2em; }
+      .btn-cta { width: 100%; padding: 15px 0; }
+      table, th, td { display: block; width: 100%; box-sizing: border-box; }
+      th { text-align: center; background: #eaf1f7; }
+      td { border-left: none; border-right: none; }
+      tr { margin-bottom: 10px; display: block; border: 1px solid #eee; border-radius: 8px; }
+      tr td:first-child { font-weight: bold; background: #f9f9f9; }
+    }
+
+    /* 네비게이션 스타일 */
+    nav { max-width: 900px; margin: 20px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: space-around; }
+    nav li { flex-basis: 30%; text-align: center; border-bottom: none; padding: 10px 0; }
+    nav a { text-decoration: none; color: #0a234e; font-weight: 600; padding: 10px 15px; display: block; transition: color 0.3s, background-color 0.3s; }
+    nav a:hover { color: #00a3ad; background: #f0f4f8; border-radius: 5px; }
+    @media (max-width: 600px) {
+      nav ul { flex-direction: column; }
+      nav li { flex-basis: 100%; }
+      nav li:not(:last-child) { border-bottom: 1px solid #eee; }
+    }
+
+    /* 폼 스타일 */
+    form label { display: block; margin-top: 15px; font-weight: 600; color: #0a234e; }
+    form input[type="text"], form input[type="email"], form input[type="tel"], form select, form textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 1em; transition: border-color 0.3s; }
+    form input:focus, form textarea:focus, form select:focus { border-color: #00a3ad; outline: none; box-shadow: 0 0 5px rgba(0, 163, 173, 0.2); }
+
+    /* 앵커 스타일 (숨김 처리) */
+    .anchor { display: block; position: relative; top: -100px; visibility: hidden; }
+
+    /* 인용구 및 하이라이트 */
+    blockquote { border-left: 5px solid #00a3ad; padding-left: 20px; margin: 20px 0; background-color: #f7fcff; border-radius: 4px; font-style: italic; color: #555; }
+    .highlight { background-color: #fffac8; padding: 2px 4px; border-radius: 3px; font-weight: 600; color: #333; }
+  </style>
+
+  <!-- Schema.org Article MarkUp (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://domain.com/ev9-maintenance-cost"
+    },
+    "headline": "기아 EV9 유지비 상세 분석: 월평균 비용, 충전비용, 보험료, 세금 비교 견적",
+    "image": [
+      "https://images.pexels.com/photos/10303866/pexels-photo-10303866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "카인포랩 (가상)"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "카인포랩 (가상)",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://domain.com/logo.png"
+      }
+    },
+    "datePublished": "2024-05-15",
+    "dateModified": "2024-05-20",
+    "description": "기아 EV9의 연간 유지비용을 상세하게 분석합니다. 충전비, 보험료, 자동차세, 부품 교체 비용 등 내연기관차와 비교하여 실제 소요되는 비용을 확인하고 2026년도 예상 유지비까지 심층적으로 다룹니다."
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>기아 EV9 유지비 상세 분석: 충전비용부터 보험료까지 완벽 가이드</h1>
+    <p>럭셔리 대형 전기 SUV EV9, 내연기관차 대비 실제 유지비용은 얼마나 절감될까?</p>
+    <a href="#consultation" class="btn-cta">EV9 유지비 맞춤 견적 확인하기</a>
+  </header>
+
+  <nav aria-label="페이지 내 이동">
+    <ul>
+      <li><a href="#overview">EV9 유지비 개요</a></li>
+      <li><a href="#breakdown">세부 비용 분석</a></li>
+      <li><a href="#comparison">내연기관차와 비교</a></li>
+      <li><a href="#future-cost">장기 예상 비용</a></li>
+      <li><a href="#tips">비용 절감 팁</a></li>
+      <li><a href="#consultation">맞춤 견적 문의</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <span id="overview-anchor" class="anchor"></span>
+      <h2>기아 EV9 유지비, 왜 중요한가?</h2>
+      <img src="https://images.pexels.com/photos/10303866/pexels-photo-10303866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="기아 EV9 주행 이미지" class="feature-img">
+      <p>기아 EV9은 대형 전기 SUV 시장의 새로운 기준을 제시하며 소비자들의 높은 관심을 받고 있습니다. 차량의 <span class="highlight">가격</span>대가 높은 만큼, 구매를 망설이는 주요 요인 중 하나는 바로 <span class="highlight">유지비</span>입니다. 전기차는 내연기관차와 비교했을 때 연료비(충전비)는 저렴하지만, <span class="highlight">보험료</span>, <span class="highlight">자동차세</span>, 그리고 예상치 못한 <span class="highlight">수리비</span> 등 고려해야 할 요소가 많습니다. 특히 EV9은 고성능, 대형 차량이므로 일반 전기차보다 <span class="highlight">유지보수 비용</span>이 더 높을 수 있습니다. 본 가이드에서는 EV9 소유자들이 실제로 체감하는 연간 <span class="highlight">평균 유지비</span>를 항목별로 상세히 분석하여, 합리적인 구매 결정을 돕고자 합니다.</p>
+      <p>이 글을 통해 <span class="highlight">기아 EV9</span>의 <span class="highlight">장점</span>과 <span class="highlight">단점</span>을 유지비 측면에서 명확히 파악할 수 있습니다. <span class="highlight">내돈내산</span> 후기를 참고하여 실제 비용을 예측하고, <span class="highlight">할인</span> 혜택을 받는 방법과 <span class="highlight">보험 가입</span> 팁도 함께 제공합니다.</p>
+
+      <h3>EV9 기본 정보 요약</h3>
+      <ul>
+        <li><strong>차량 종류:</strong> 대형 전기 SUV (3열 6/7인승)</li>
+        <li><strong>배터리 용량:</strong> 99.8kWh (롱레인지 모델 기준)</li>
+        <li><strong>주행 가능 거리:</strong> 롱레인지 2WD 기준 501km (복합)</li>
+        <li><strong>차량 가격대:</strong> 7,000만 원 ~ 1억 원 (트림 및 옵션에 따라 변동)</li>
+      </ul>
+    </section>
+
+    <section id="breakdown">
+      <span id="breakdown-anchor" class="anchor"></span>
+      <h2>EV9 세부 유지비 항목별 심층 분석</h2>
+      <p>기아 EV9의 연간 <span class="highlight">예상 유지비</span>를 계산하기 위해서는 크게 4가지 항목을 고려해야 합니다: 충전 비용, 보험료, 세금, 기타 소모품 및 정비 비용. 각 항목별로 자세한 내용을 살펴보겠습니다.</p>
+
+      <h3>1. 충전 비용 (전기차의 연료비)</h3>
+      <p>전기차 유지비의 핵심은 <span class="highlight">충전 비용</span>입니다. EV9 롱레인지 모델의 배터리 용량은 99.8kWh입니다. 주행 환경에 따라 <span class="highlight">충전 금액</span>이 크게 달라지며, 주로 사용되는 충전 방식은 크게 세 가지입니다: 공용 충전소 급속 충전, 공용 충전소 완속 충전, 그리고 주택용 완속 충전(아파트/단독주택)입니다. 현재 <span class="highlight">평균 충전 비용</span>을 기준으로 계산해 보겠습니다.</p>
+      <ul>
+        <li><strong>공용 급속 충전 (고속도로/공공장소):</strong> <span class="highlight">평균</span> 1kWh당 300원~400원. 완충 시 약 3만 원~4만 원.</li>
+        <li><strong>공용 완속 충전 (마트/주차장):</strong> <span class="highlight">평균</span> 1kWh당 200원~300원. 완충 시 약 2만 원~3만 원.</li>
+        <li><strong>심야 시간대 주택용 완속 충전 (가장 저렴):</span> <span class="highlight">평균</span> 1kWh당 100원~150원 (계절 및 시간대별 차등 적용). 완충 시 약 1만 원~1만 5천 원.</li>
+      </ul>
+      <p>연간 주행 거리가 15,000km라고 가정했을 때, EV9의 전비(복합)는 3.9km/kWh입니다. 연간 소요 전력량은 약 3,846kWh입니다. 만약 70%를 심야 충전, 30%를 공용 급속 충전으로 이용한다면, 연간 <span class="highlight">충전 비용</span>은 대략 80만 원에서 120만 원 <span class="highlight">예상</span>됩니다. 이는 동급 내연기관차의 연간 주유비 300만 원~400만 원과 비교했을 때 현저히 낮은 수준입니다.</p>
+
+      <h3>2. 자동차 보험료</h3>
+      <p>EV9의 <span class="highlight">보험료</span>는 일반 내연기관차 대비 높은 편입니다. 그 이유는 차량 <span class="highlight">가격</span>이 고가이며, 고전압 배터리 등 특수 부품의 <span class="highlight">수리비</span>가 비싸기 때문입니다. 특히 EV9은 신차이고, 대형 SUV이므로 보험사에서 책정하는 <span class="highlight">보험료</span>가 높게 나옵니다. 개인의 운전 경력, 나이, 사고 이력에 따라 편차가 크지만, <span class="highlight">평균</span>적으로 신규 <span class="highlight">가입</span>자의 경우 연간 150만 원에서 250만 원을 <span class="highlight">예상</span>해야 합니다. 전기차 전용 특약(충전 중 사고, 배터리 특약 등)을 <span class="highlight">가입</span>할 경우 <span class="highlight">비용</span>이 추가될 수 있습니다.</p>
+
+      <h3>3. 자동차세 및 공과금</h3>
+      <p>전기차의 가장 큰 <span class="highlight">장점</span> 중 하나는 저렴한 <span class="highlight">자동차세</span>입니다. 내연기관차는 배기량에 따라 세금이 부과되지만, 전기차는 배기량이 없으므로 '기타 자동차'로 분류되어 정액이 부과됩니다. 2024년 기준 EV9의 <span class="highlight">자동차세</span>는 지방교육세 포함 연간 약 13만 원입니다. 이는 동급 3.0L 내연기관차의 <span class="highlight">자동차세</span> 70만 원~80만 원과 비교하면 엄청난 <span class="highlight">차이점</span>입니다. 또한, 전기차는 2024년까지 공채 매입 의무가 면제되는 등 다양한 <span class="highlight">혜택</span>이 있습니다.</p>
+
+      <h3>4. 소모품 및 정비 비용 (EV9 오토케어)</h3>
+      <p>전기차는 엔진오일, 미션오일, 점화플러그 등 내연기관 소모품이 없어 정비가 간편합니다. 하지만 EV9은 타이어 <span class="highlight">교체 비용</span>이 높습니다. 차체 무게가 무겁고 토크가 높아 타이어 마모 속도가 빠르기 때문입니다. EV9 순정 타이어(21인치 기준) <span class="highlight">가격</span>은 개당 30만 원~40만 원으로, <span class="highlight">평균</span> 3만 km~4만 km 주행 시 <span class="highlight">교체 비용</span>으로 100만 원 이상 <span class="highlight">예상</span>해야 합니다. 브레이크 패드 역시 회생 제동 시스템 덕분에 수명이 길지만, 대형 차량이므로 <span class="highlight">교체 비용</span>이 일반 차량보다 높을 수 있습니다. 또한, 에어컨 필터, 워셔액 등 기타 소모품 <span class="highlight">비용</span>도 발생합니다. <span class="highlight">내돈내산</span> 후기를 보면 5년차부터 발생하는 <span class="highlight">배터리 교체 비용</span>에 대한 우려도 많습니다.</p>
+    </section>
+
+    <section id="comparison">
+      <span id="comparison-anchor" class="anchor"></span>
+      <h2>기아 EV9 유지비 vs. 동급 내연기관차 비교 분석</h2>
+      <img src="https://images.pexels.com/photos/10303866/pexels-photo-10303866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="전기차와 내연기관차 비교 이미지" class="feature-img">
+      <p>EV9의 <span class="highlight">유지비</span>를 더욱 명확하게 파악하기 위해, 동급 크기의 내연기관차인 기아 모하비 3.0 디젤 모델과 <span class="highlight">비교</span>해 보겠습니다. 연간 주행거리 15,000km, 운전자 A(30대 중반, 5년 이상 무사고)를 기준으로 <span class="highlight">평균 비용</span>을 <span class="highlight">예상</span>합니다.</p>
+
+      <h3>연간 유지비 비교표 (EV9 vs. 모하비 3.0 디젤)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>기아 EV9 (전기차)</th>
+            <th>기아 모하비 (내연기관차)</th>
+            <th>비용 차이 (EV9 절감액)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>연료비 (충전/주유)</strong></td>
+            <td>연 80만 원 ~ 120만 원</td>
+            <td>연 350만 원 ~ 400만 원</td>
+            <td><strong>230만 원 ~ 280만 원</strong></td>
+          </tr>
+          <tr>
+            <td><strong>자동차세</strong></td>
+            <td>연 13만 원</td>
+            <td>연 78만 원</td>
+            <td><strong>65만 원</strong></td>
+          </tr>
+          <tr>
+            <td><strong>소모품 교체 및 정비</strong></td>
+            <td>연 30만 원 ~ 50만 원 (엔진오일 불필요)</td>
+            <td>연 80만 원 ~ 120만 원 (엔진오일, 미션오일 등)</td>
+            <td><strong>50만 원 ~ 70만 원</strong></td>
+          </tr>
+          <tr>
+            <td><strong>자동차 보험료</strong></td>
+            <td>연 150만 원 ~ 250만 원</td>
+            <td>연 120만 원 ~ 200만 원</td>
+            <td>-30만 원 ~ +50만 원 (차량 가격에 따라 EV9이 높음)</td>
+          </tr>
+          <tr>
+            <td><strong>연간 총 예상 비용</strong></td>
+            <td><strong>273만 원 ~ 433만 원</strong></td>
+            <td><strong>628만 원 ~ 798만 원</strong></td>
+            <td><strong>350만 원 ~ 400만 원 이상 절감</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>위 표를 보면 EV9의 <span class="highlight">유지비</span>가 내연기관차 대비 연간 <span class="highlight">평균</span> 350만 원 이상 <span class="highlight">저렴</span>하다는 것을 알 수 있습니다. 특히 주행거리가 길수록 <span class="highlight">충전 비용</span> 절감 효과가 커져 <span class="highlight">장점</span>이 극대화됩니다.</p>
+    </section>
+
+    <section id="future-cost">
+      <span id="future-cost-anchor" class="anchor"></span>
+      <h2>EV9 장기 유지비 예측: 2026년 이후 전망 및 배터리 교체 비용</h2>
+      <p>전기차 유지비에서 가장 큰 변수는 장기적인 <span class="highlight">배터리 교체 비용</span>입니다. EV9의 고전압 배터리는 차량 <span class="highlight">가격</span>의 30% 이상을 차지하며, <span class="highlight">보증 기간</span>(대부분 10년/20만 km)이 지난 후 <span class="highlight">교체</span>가 필요할 경우 수천만 원의 <span class="highlight">비용</span>이 발생할 수 있습니다. <span class="highlight">내돈내산</span> 후기에서는 이러한 <span class="highlight">배터리 교체</span> 리스크를 EV9의 가장 큰 <span class="highlight">단점</span>으로 꼽습니다.</p>
+
+      <h3>2026년 유지비 전망: 충전 요금 인상 가능성</h3>
+      <p>현재 정부의 전기차 보급 확대를 위한 <span class="highlight">혜택</span>으로 충전 요금이 저렴하게 유지되고 있습니다. 그러나 2026년 이후에는 충전 요금 할인 <span class="highlight">혜택</span>이 축소되거나, 전기 요금 인상에 따라 <span class="highlight">충전 비용</span>이 상승할 가능성이 높습니다. 한국전력공사(KEPCO) 등의 정책 변화에 따라 EV9의 연간 <span class="highlight">유지비</span>가 현재보다 20%~30% 증가할 수 있습니다. 이러한 미래 <span class="highlight">예상</span> <span class="highlight">비용</span> 변화를 고려하여 <span class="highlight">구매 견적</span>을 내야 합니다.</p>
+
+      <h3>배터리 보증 기간과 중고차 <span class="highlight">감가상각</span></h3>
+      <p>기아 EV9은 10년/20만 km의 배터리 보증을 제공합니다. 이는 <span class="highlight">배터리 교체 비용</span>에 대한 부담을 일정 기간 덜어주는 <span class="highlight">장점</span>입니다. 하지만 10년이 지난 후에는 중고차 <span class="highlight">감가상각</span>이 빠르게 진행될 수 있습니다. 배터리 성능 저하에 따른 <span class="highlight">중고차 가격</span> 하락폭을 고려해야 합니다. 최근 <span class="highlight">테슬라</span> 등 다른 브랜드 <span class="highlight">전기차</span>의 중고 <span class="highlight">가격</span> 추이를 <span class="highlight">비교</span>해 보면 EV9 역시 비슷한 흐름을 보일 것으로 <span class="highlight">예상</span>됩니다.</p>
+
+      <blockquote>
+        <p><strong>참고:</strong> <a href="https://namu.wiki/w/%EA%B8%B0%EC%95%84%20EV9" target="_blank">나무위키 기아 EV9</a> 정보를 통해 차량 스펙과 시장 반응을 확인할 수 있습니다. <a href="https://www.korea.kr/policy/policyView.do?keyword=전기차" target="_blank">정부 정책 포털</a>에서는 전기차 보조금 및 세제 혜택 정보를 얻을 수 있습니다.</p>
+      </blockquote>
+    </section>
+
+    <section id="tips">
+      <span id="tips-anchor" class="anchor"></span>
+      <h2>EV9 유지비 절감 팁 및 2024년 혜택 정보</h2>
+      <p>EV9을 소유하며 <span class="highlight">유지비</span>를 더욱 <span class="highlight">저렴</span>하게 관리할 수 있는 현실적인 방법들을 <span class="highlight">추천</span>합니다. 특히 <span class="highlight">충전 비용</span>과 <span class="highlight">보험료</span>를 줄이는 것이 핵심입니다.</p>
+
+      <h3>1. 스마트한 충전 관리: 시간대별 요금제 활용</h3>
+      <p>한국전력공사(KEPCO)의 계시별 요금제를 적극 활용해야 합니다. EV9의 경우 심야 시간대(밤 11시 ~ 아침 9시)에 충전하면 요금이 대폭 <span class="highlight">할인</span>됩니다. 아파트 등 공동주택 거주자라면 공용 충전소의 요금제를 확인하여 심야 시간대 <span class="highlight">충전 비용</span>이 저렴한 곳을 <span class="highlight">추천</span>합니다. 또한, <span class="highlight">네이버</span> 등 포털에서 제공하는 충전소 <span class="highlight">가격</span> <span class="highlight">비교</span> 정보를 활용하여 <span class="highlight">충전 비용</span>을 절약할 수 있습니다.</p>
+
+      <h3>2. 전기차 전용 보험 특약 가입</h3>
+      <p>최근 보험사들은 전기차 전용 특약을 제공합니다. 여기에는 충전 중 사고 보상, 배터리 신품 가액 보상 특약 등이 포함됩니다. <span class="highlight">보험 가입</span> 시 일반 보험과 <span class="highlight">전기차 전문</span> 보험을 <span class="highlight">비교</span>하여 <span class="highlight">견적</span>을 받아보는 것이 좋습니다. 특히 보험료 <span class="highlight">할인</span>을 위해 첨단 안전 장치(ADAS)를 활용하여 보험료 <span class="highlight">혜택</span>을 받는 것도 필수입니다.</p>
+
+      <h3>3. EV9 보조금 및 <span class="highlight">지원금</span> 활용</h3>
+      <p>EV9은 차량 <span class="highlight">가격</span>대가 높아 국고 보조금 전액은 받기 어렵지만, 지자체 보조금 및 세제 <span class="highlight">혜택</span>은 여전히 유효합니다. 정부 <span class="highlight">지원금</span>과 <span class="highlight">할인</span> 혜택을 <span class="highlight">가입</span> 전에 반드시 확인해야 합니다. 2024년 기준 EV9은 <span class="highlight">가격</span> 조건에 따라 국고 보조금 <span class="highlight">혜택</span>이 일부 축소되지만, 지자체별 <span class="highlight">보조금</span>을 받으면 초기 <span class="highlight">구매 비용</span>을 절감할 수 있습니다. <a href="https://ev.or.kr/" target="_blank">무공해차 통합누리집</a>에서 최신 <span class="highlight">지원금</span> 정보를 확인할 수 있습니다.</p>
+      <p>추가로, EV9 구매 시 <span class="highlight">현금 지원</span>, <span class="highlight">상품권</span> <span class="highlight">혜택</span>, <span class="highlight">이벤트</span> 등 다양한 프로모션도 존재합니다. <span class="highlight">신규 가입</span>자를 위한 딜러사별 <span class="highlight">혜택</span>을 <span class="highlight">비교</span>하는 것도 좋은 방법입니다. 또한 <span class="highlight">디시</span> 등 커뮤니티 <span class="highlight">후기</span>를 통해 <span class="highlight">저렴한곳</span> 정보를 찾는 것도 유용합니다.</p>
+    </section>
+
+    <section id="consultation">
+      <span id="consultation-anchor" class="anchor"></span>
+      <h2>나에게 맞는 EV9 유지비 견적 문의</h2>
+      <p>운전 습관, 거주 지역, 주행 거리에 따라 개인별 <span class="highlight">유지비</span>는 크게 달라집니다. 정확한 <span class="highlight">예상</span> <span class="highlight">비용</span>을 확인하려면 전문가와의 상담을 <span class="highlight">추천</span>합니다. 아래 양식을 작성해 주시면 <span class="highlight">기아 EV9</span>의 맞춤형 <span class="highlight">유지비 견적</span>을 상세하게 분석해 드립니다.</p>
+      <form action="/submit-maintenance-cost-inquiry" method="POST" style="max-width:700px; margin:auto; padding:20px; border:1px solid #ddd; border-radius:10px;">
+        <label for="name">이름<span style="color:red;">*</span></label>
+        <input type="text" id="name" name="name" required placeholder="예: 홍길동">
+
+        <label for="phone">연락처<span style="color:red;">*</span></label>
+        <input type="tel" id="phone" name="phone" required placeholder="010-1234-5678" pattern="[0-9\-]+">
+
+        <label for="email">이메일 주소</label>
+        <input type="email" id="email" name="email" placeholder="예: help@domain.com">
+
+        <label for="charge-type">주요 충전 방식 선택<span style="color:red;">*</span></label>
+        <select id="charge-type" name="charge_type" required>
+          <option value="">선택하세요</option>
+          <option value="home">주택용 완속 충전 (집밥)</option>
+          <option value="public_slow">공용 완속 충전 위주</option>
+          <option value="public_fast">공용 급속 충전 위주</option>
+        </select>
+
+        <label for="driving-distance">월평균 예상 주행 거리 (km)</label>
+        <input type="text" id="driving-distance" name="driving_distance" placeholder="예: 1,500km">
+
+        <label for="existing-car">현재 소유 차량 (비교 분석용)</label>
+        <input type="text" id="existing-car" name="existing_car" placeholder="예: 기아 쏘렌토 디젤">
+
+        <label for="message">추가 문의 사항 (예: 2026년 이후 세금 전망, 장단점 비교 요청 등)</label>
+        <textarea id="message" name="message" rows="4" placeholder="자세한 문의 내용을 남겨주시면 맞춤형 상담을 제공합니다."></textarea>
+
+        <button type="submit" class="btn-cta">EV9 유지비 맞춤 견적 신청하기</button>
+      </form>
+      <p style="text-align:center; margin-top:20px;">상담을 통해 정확한 <span class="highlight">가격</span>, <span class="highlight">견적</span>, <span class="highlight">비용</span> 정보를 안내해 드립니다. <span class="highlight">네이버</span>, <span class="highlight">구글</span>, <span class="highlight">유튜브</span> 등 다양한 채널에서 <span class="highlight">EV9 후기</span>를 찾아볼 수 있지만, 개인 맞춤형 정보는 전문가 상담이 필수입니다.</p>
+    </section>
+  </main>
+
+  
